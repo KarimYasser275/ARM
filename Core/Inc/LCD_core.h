@@ -1,0 +1,34 @@
+/*
+ * LCD_core.h
+ *
+ *  Created on: Aug 23, 2023
+ *      Author: E0162112
+ */
+
+#ifndef INC_LCD_CORE_H_
+#define INC_LCD_CORE_H_
+
+#define CLEAR_DISPLAY_MASK							1
+
+#define RETURN_HOME_MASK							2
+
+#define ENTRY_HOME_MASK								4
+#define ENTRY_HOME_CURSOR_AND_DISPLAY_DIR_BIT		1U
+#define ENTRY_HOME_DISPLAY_SHIFT_BIT				0U
+
+#define DISPLAY_CONTROL_MASK						8
+#define DISPLAY_CONTROL_DISPLAY_STATE_BIT			2U
+#define DISPLAY_CONTROL_CURSOR_STATE_BIT			1U
+#define DISPLAY_CONTROL_CURSOR_BLINK_BIT			0U
+
+#define CURSOR_OR_DISPLAY_SHIFT_MASK				16
+#define CURSOR_SHIFT_BIT							3
+#define DISPLAY_SHIFT_BIT							2
+
+#define FUNCTION_SET_MASK							32
+#define FUNCTION_SET_DATA_LENGTH_BIT				4
+#define FUNCTION_SET_NUMBER_OF_LINES_BIT			3
+#define FUNCTION_SET_FONT_SELECT_BIT				2
+
+
+#endif /* INC_LCD_CORE_H_ */
