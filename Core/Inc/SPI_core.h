@@ -61,8 +61,8 @@ typedef enum
 	OFFSET_SPI_SR_CRCERR,
 	OFFSET_SPI_SR_MODF,
 	OFFSET_SPI_SR_OVR,
-	OFFSET_SPI_SR_BSY,
-}SPI_CR2_BitsOffset_t;
+	OFFSET_SPI_SR_BSY
+} SPI_SR_BitsOffset_t;
 
 #define SPI ((volatile SPI_Registers_t*)0x40013000)
 
