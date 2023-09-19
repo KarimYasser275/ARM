@@ -74,4 +74,6 @@ void DMA_EnableChannel (DMA_Channels_t channel);
 
 void DMA_DisableChannel (DMA_Channels_t channel);
 
+void DMA_IRQ_HandlerSet(DMA_Channels_t channel, void* InterruptHandler);
+
 #endif /* SRC_DMA_CORE_H_ */

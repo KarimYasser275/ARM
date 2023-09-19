@@ -22,6 +22,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "DMA_core.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,7 +52,7 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern void(*DMA_IrqHandler[DMA_MAX_NUMBER_OF_CHANNELS])(void);
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -213,5 +214,8 @@ void TIM2_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+void DMA1_Channel1_IRQHandler(void)
+{
+	DMA_IrqHandler[DMA_CHANNEL_1]();
+}
 /* USER CODE END 1 */

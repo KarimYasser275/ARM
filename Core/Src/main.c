@@ -20,6 +20,7 @@
 #include "main.h"
 #include "adc.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -27,6 +28,7 @@
 #include "SCHD.h"
 #include "TEMP.h"
 #include "DMA_core.h"
+#include "SPI_core.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,14 +49,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t DMA_Ch1IrqCounter = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
-
+void DMA_IRQ_HANDLER(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -95,6 +97,7 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   MX_ADC1_Init();
+  MX_USART1_UART_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -102,10 +105,19 @@ int main(void)
   SCHD_Init();
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_ADC_Start(&hadc1);
+
   extern DMA_config_t DMA_config[7];
+  extern SPI_ConfigParam_t SPI_ConfigParams;
+
   __HAL_RCC_DMA1_CLK_ENABLE();	//enable DMA RCC
   DMA_Init(DMA_config);
+
+  __HAL_RCC_SPI1_CLK_ENABLE();
+  SPI_Init(SPI_ConfigParams);
+
+
   extern uint16_t ADC_rawValue;
+  DMA_IRQ_HandlerSet(DMA_CHANNEL_1,DMA_IRQ_HANDLER);
   DMA_Start(DMA_CHANNEL_1,0x4001244c , ADC_DMA_RawValue, 100);
   DMA_Start(DMA_CHANNEL_2,&ADC_rawValue , ADC_DMA_RawValue2, 100);
   /* USER CODE END 2 */
@@ -188,6 +200,12 @@ void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef *htim)
 	{
 		SCHD_InterruptHandler();
 	}
+}
+
+void DMA_IRQ_HANDLER(void)
+{
+	if (DMA_Ch1IrqCounter < 255)  DMA_Ch1IrqCounter++;
+	else DMA_Ch1IrqCounter = 0;
 }
 
 /* USER CODE END 4 */

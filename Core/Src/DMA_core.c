@@ -10,6 +10,9 @@
 #include "DMA_cfg.h"
 #include "Bit_Math.h"
 
+#define NULL ((void *)0)
+
+void(*DMA_IrqHandler[DMA_MAX_NUMBER_OF_CHANNELS])(void) = {NULL};
 
 void DMA_Init(DMA_config_t DMA_configParam[DMA_MAX_NUMBER_OF_CHANNELS])
 {
@@ -62,4 +65,12 @@ void DMA_Start(DMA_Channels_t channel, uint32_t* DMA_SourceAddress, uint32_t* DM
 
 	DMA_EnableChannel(channel);
 
+}
+
+void DMA_IRQ_HandlerSet(DMA_Channels_t channel, void* InterruptHandler)
+{
+	if ( InterruptHandler != NULL)
+	{
+		DMA_IrqHandler[channel] = InterruptHandler;
+	}
 }
